@@ -3,6 +3,7 @@ import express from "express";
 import cors from "cors";
 import { handleDemo } from "./routes/demo";
 import { handleChatMessage } from "./routes/chatbot";
+import { sendEmail } from "./routes/email";
 
 export function createServer() {
   const app = express();
@@ -20,6 +21,7 @@ export function createServer() {
 
   app.get("/api/demo", handleDemo);
   app.post("/api/chat", handleChatMessage);
+  app.post("/api/email", sendEmail );
 
   return app;
 }

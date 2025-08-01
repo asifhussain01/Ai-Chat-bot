@@ -17,7 +17,11 @@ export default function Contact() {
     priority: ""
   });
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submissionStatus, setSubmissionStatus] = useState({
+    isSubmitting: false,
+    message: "",
+    isError: false,
+  });
 
   const contactMethods = [
     {
@@ -75,22 +79,22 @@ export default function Contact() {
 
   const officeLocations = [
     {
-      city: "San Francisco",
-      address: "123 Innovation Drive\nSan Francisco, CA 94105",
-      phone: "+1 (555) 123-4567",
-      timezone: "PST"
+      city: "Indore",
+      address: "232 C mohini vihar\nIndore, MP 452001",
+      phone: " +91 8271169648 ",
+      timezone: "IST"
     },
     {
-      city: "New York",
-      address: "456 Business Ave\nNew York, NY 10001",
-      phone: "+1 (555) 987-6543",
-      timezone: "EST"
+      city: "Delhi",
+      address: " 123 Tech Park\nDelhi, DL 110001",
+      phone: "+91 9876543210",
+      timezone: "IST"
     },
     {
       city: "London",
       address: "789 Tech Street\nLondon, EC1A 1BB, UK",
       phone: "+44 20 7123 4567",
-      timezone: "GMT"
+      timezone: "IST"
     }
   ];
 
@@ -113,18 +117,31 @@ export default function Contact() {
     }
   ];
 
-  const handleInputChange = (field: string, value: string) => {
+  const handleInputChange = (field, value) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    
-    // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitting(false);
-      alert("Thank you for your message! We'll get back to you within 24 hours.");
+    setSubmissionStatus({ isSubmitting: true, message: "", isError: false });
+
+    try {
+      const response = await fetch('/api/email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Something went wrong');
+      }
+
+      // Success
+      setSubmissionStatus({ isSubmitting: false, message: data.message, isError: false });
       setFormData({
         name: "",
         email: "",
@@ -133,7 +150,11 @@ export default function Contact() {
         message: "",
         priority: ""
       });
-    }, 2000);
+
+    } catch (error) {
+      // Error
+      setSubmissionStatus({ isSubmitting: false, message: error.message, isError: true });
+    }
   };
 
   return (
@@ -149,7 +170,7 @@ export default function Contact() {
             Contact & Support
           </h1>
           <p className="text-xl text-gray-600 max-w-4xl mx-auto mb-12 leading-relaxed">
-            Have questions? Need help? Our expert support team is ready to assist you. 
+            Have questions? Need help? Our expert support team is ready to assist you.
             Get in touch through your preferred channel and we'll help you succeed.
           </p>
         </div>
@@ -238,7 +259,7 @@ export default function Contact() {
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       Priority Level
                     </label>
-                    <Select onValueChange={(value) => handleInputChange("priority", value)}>
+                    <Select onValueChange={(value) => handleInputChange("priority", value)} value={formData.priority}>
                       <SelectTrigger>
                         <SelectValue placeholder="Select priority" />
                       </SelectTrigger>
@@ -277,13 +298,20 @@ export default function Contact() {
                   />
                 </div>
 
+                {/* Submission Status Message */}
+                {submissionStatus.message && (
+                  <div className={`p-4 rounded-md text-sm ${submissionStatus.isError ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'}`}>
+                    {submissionStatus.message}
+                  </div>
+                )}
+
                 <Button
                   type="submit"
-                  disabled={isSubmitting}
+                  disabled={submissionStatus.isSubmitting}
                   className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
                   size="lg"
                 >
-                  {isSubmitting ? (
+                  {submissionStatus.isSubmitting ? (
                     "Sending..."
                   ) : (
                     <>
