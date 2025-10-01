@@ -12,7 +12,7 @@ export default defineConfig(({ mode }) => ({
       allow: ["./client", "./shared"],
       deny: [".env", ".env.*", "*.{crt,pem}", "**/.git/**", "server/**"],
     },
-    allowedHosts: ['ai-chat-bot-fb6a.onrender.com'],
+    allowedHosts: ['ai-chat-bot-ey9m.onrender.com'],
   },
   build: {
     outDir: "dist/spa",
