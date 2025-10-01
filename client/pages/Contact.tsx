@@ -28,7 +28,7 @@ export default function Contact() {
       icon: Mail,
       title: "Email Support",
       description: "Get help via email with detailed responses",
-      contact: "support@aichatbot.com",
+      contact: "asifh9336@gmail.com",
       responseTime: "Within 24 hours",
       color: "from-blue-500 to-cyan-500"
     },
@@ -36,8 +36,8 @@ export default function Contact() {
       icon: Phone,
       title: "Phone Support",
       description: "Speak directly with our support team",
-      contact: "+1 (555) 123-4567",
-      responseTime: "Mon-Fri, 9AM-6PM EST",
+      contact: "+91 8271169648",
+      responseTime: "Mon-Fri, 9AM-6PM IST",
       color: "from-green-500 to-emerald-500"
     },
     {

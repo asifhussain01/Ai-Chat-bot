@@ -88,7 +88,7 @@ export default function About() {
               <h2 className="text-4xl font-bold text-gray-900 mb-6">Our Story</h2>
               <div className="space-y-4 text-gray-600 leading-relaxed">
                 <p>
-                  Founded in 2022, our company emerged from a simple observation: while AI had become incredibly 
+                  Founded in 2025, our company emerged from a simple observation: while AI had become incredibly 
                   powerful, it still felt robotic and disconnected from human needs. Our founders, with backgrounds 
                   in machine learning, linguistics, and human-computer interaction, set out to change that.
                 </p>
